@@ -27,6 +27,9 @@ function DogList() {
         getDogs();
     }
 
+    // TODO: why doesn't the above work with no initial value for useState
+    // plus check for '!dogs' in conditional? we get an infinite loop...
+
   return (
     <ul>
       {dogs.map((d, i) => (
