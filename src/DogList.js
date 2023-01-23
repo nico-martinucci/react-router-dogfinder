@@ -1,10 +1,5 @@
-import axios from "axios";
-import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import { Link } from "react-router-dom";
-
-const BASE_API_URL = "http://localhost:5001";
-
 /**
  * DogList: component to render a list of all current dogs.
  *
@@ -15,32 +10,22 @@ const BASE_API_URL = "http://localhost:5001";
  *
  * App -> DogList
  */
-function DogList() {
-    const [dogs, setDogs] = useState([]);
-
-    async function getDogs() {
-        const res = await axios.get(`${BASE_API_URL}/dogs`);
-        setDogs(res.data);
-    }
-
-    if (dogs.length === 0) {
-        getDogs();
-    }
-
-    // TODO: why doesn't the above work with no initial value for useState
-    // plus check for '!dogs' in conditional? we get an infinite loop...
-
+function DogList({ dogs }) {
   return (
-    <ul>
-      {dogs.map((d, i) => (
-        <li key={uuid()}>
-          <Link to={`/dogs/${d.name}`}>
+    <div className="DogList d-flex justify-content-evenly align-items-center mt-3">
+      {dogs.map((d) => (
+        <div key={uuid()}>
+          <Link className="text-decoration-none" to={`/dogs/${d.src}`}>
             <h3>{d.name}</h3>
-            <img src={`../public/${d.src}.jpg`} alt={`${d.name}`} />
           </Link>
-        </li>
+          <img
+            src={`/${d.src}.jpg`}
+            alt={`${d.name}`}
+            style={{ height: 250 }}
+          />
+        </div>
       ))}
-    </ul>
+    </div>
   );
 }
 
